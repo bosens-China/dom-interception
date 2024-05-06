@@ -53,11 +53,11 @@ export interface Options {
 - type: `boolean`
 - default: `true`
 
-是否填充截取长度位 length，例如 length 为 200,fill 为 true，则会截取刚好为 200 字符。
+是否填充截取长度刚好等于 `length`，例如 length 设置为 200 fill 为 `true`，则会截取刚好为 200 字符。
 
 如果为 `false`，则删除超出节点，可以看下面这个测试例子。
 
-fill false
+- fill `false`
 
 ```js
 const text = `<h1>协议</h1>
@@ -71,7 +71,7 @@ const { text: t } = domInterception(div, { length: 10, fill: false });
 expect(t).toBe(`协议\n  `);
 ```
 
-fill true
+- fill `true`
 
 ```js
 const text = `<h1>协议</h1>
