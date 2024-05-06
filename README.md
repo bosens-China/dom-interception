@@ -29,8 +29,8 @@ const div = document.createElement("div");
 div.innerHTML = text;
 
 const { text: t, dom } = domInterception(div, { length: 5 });
-console.log(text);
-// 协议欢迎您
+console.log(t); // 协议欢迎您
+console.log(dom.innerHTML); // <h1>协议</h1><img src="test.com.png"><video src="test/video.mp4"></video><p>欢迎您</p>
 ```
 
 ## 选项
@@ -60,29 +60,29 @@ export interface Options {
 - fill `false`
 
 ```js
-const text = `<h1>协议</h1>
-  <p>更新日期：2023 年 9 月 10 日 <br>
-  生效日期：2023 年 9 月 15 日</p>
-  <p>欢迎您来到。</p>`;
+import domInterception from "dom-interception";
+
+const text = `<h1>协议</h1><p>更新日期：2023 年 9 月 10 日 <br>生效日期：2023 年 9 月 15 日</p><p>欢迎您来到。</p>`;
 const div = document.createElement("div");
 div.innerHTML = text;
 
-const { text: t } = domInterception(div, { length: 10, fill: false });
-expect(t).toBe(`协议\n  `);
+const { text: t, dom } = domInterception(div, { length: 10, fill: false });
+console.log(t); // 协议
+console.log(dom.innerHTML); // <h1>协议</h1>
 ```
 
 - fill `true`
 
 ```js
-const text = `<h1>协议</h1>
-  <p>更新日期：2023 年 9 月 10 日 <br>
-  生效日期：2023 年 9 月 15 日</p>
-  <p>欢迎您来到。</p>`;
+import domInterception from "dom-interception";
+
+const text = `<h1>协议</h1><p>更新日期：2023 年 9 月 10 日 <br>生效日期：2023 年 9 月 15 日</p><p>欢迎您来到。</p>`;
 const div = document.createElement("div");
 div.innerHTML = text;
 
-const { text: t } = domInterception(div, { length: 10 });
-expect(t).toBe(`协议\n  更新日期：`);
+const { text: t, dom } = domInterception(div, { length: 10 });
+console.log(t); // 协议更新日期：202
+console.log(dom.innerHTML); // <h1>协议</h1><p>更新日期：202</p>
 ```
 
 ## 协议
