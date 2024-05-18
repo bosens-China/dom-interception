@@ -4,7 +4,7 @@ const config = {
   transform: {
     "^.+\\.(t|j)sx?$": "@swc/jest",
   },
-  testEnvironment: "jsdom",
+  // testEnvironment: "jsdom",
   extensionsToTreatAsEsm: [".ts", ".tsx"],
 };
 

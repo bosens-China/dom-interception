@@ -1,13 +1,17 @@
-import { domInterception } from "../main";
+/**
+ * @jest-environment jsdom
+ */
+
+import { domInterception } from "../domInterception";
 
 test(`default`, () => {
   const text = "test";
   const div = document.createElement("div");
   div.innerHTML = text;
 
-  expect(domInterception(div).text).toBe("");
+  expect(domInterception(div).text).toBe("test");
   expect(domInterception(div, { length: 6 }).text).toBe(text);
-  expect(domInterception(div).dom).not.toBe(div);
+  expect(domInterception(div).dom).toBe(div);
 
   expect(domInterception(div, { fill: false, length: text.length }).text).toBe(
     text

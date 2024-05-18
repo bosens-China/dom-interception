@@ -3,11 +3,19 @@ export interface Options {
   fill: boolean;
 }
 
+/**
+ * 截取指定长度字符串...
+ *
+ */
 export function domInterception<T extends Node>(
   dom: T,
-  options: Partial<Options> = {}
+  options: Partial<Options> = {},
+  uncheck?: boolean
 ) {
-  if (!(dom instanceof Node)) {
+  // 开后门，不需要校验在node环境下
+
+  // eslint-disable-next-line prefer-rest-params
+  if (!uncheck && !(dom instanceof Node)) {
     throw new Error(
       `Passing a dom element is not a node type! But rather ${Object.prototype.toString.call(
         dom
@@ -15,9 +23,16 @@ export function domInterception<T extends Node>(
     );
   }
 
+  // 如果没有赋值，则全部返回即可
+  if (options.length == null) {
+    return {
+      dom: dom as T,
+      text: dom.textContent ?? "",
+    };
+  }
+  const cloneElement = dom.cloneNode(true);
   let len = Math.max(options.length ?? 0, 0);
   const { fill = true } = options;
-  const cloneElement = dom.cloneNode(true);
 
   // 向上删除元素
   const deleteBlank = (el: Node | null) => {
@@ -67,5 +82,3 @@ export function domInterception<T extends Node>(
     text: cloneElement.textContent ?? "",
   };
 }
-
-export default domInterception;

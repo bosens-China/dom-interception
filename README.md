@@ -22,7 +22,7 @@ pnpm i dom-interception
 ```
 
 ```js
-import domInterception from "dom-interception";
+import { domInterception } from "dom-interception";
 
 const text = `<h1>协议</h1><img src="test.com.png" /><video src="test/video.mp4"></video><p>欢迎您来到。</p>`;
 const div = document.createElement("div");
@@ -37,8 +37,8 @@ console.log(dom.innerHTML); // <h1>协议</h1><img src="test.com.png"><video src
 
 ```js
 export interface Options {
-  length: number;
-  fill: boolean;
+  length?: number;
+  fill?: boolean;
 }
 ```
 
@@ -46,7 +46,7 @@ export interface Options {
 
 - type: `number`
 
-需要截取的长度
+需要截取的长度，默认不截取全部返回。
 
 ### fill
 
@@ -60,7 +60,7 @@ export interface Options {
 - fill `false`
 
 ```js
-import domInterception from "dom-interception";
+import { domInterception } from "dom-interception";
 
 const text = `<h1>协议</h1><p>更新日期：2023 年 9 月 10 日 <br>生效日期：2023 年 9 月 15 日</p><p>欢迎您来到。</p>`;
 const div = document.createElement("div");
@@ -74,7 +74,7 @@ console.log(dom.innerHTML); // <h1>协议</h1>
 - fill `true`
 
 ```js
-import domInterception from "dom-interception";
+import { domInterception } from "dom-interception";
 
 const text = `<h1>协议</h1><p>更新日期：2023 年 9 月 10 日 <br>生效日期：2023 年 9 月 15 日</p><p>欢迎您来到。</p>`;
 const div = document.createElement("div");
@@ -83,6 +83,20 @@ div.innerHTML = text;
 const { text: t, dom } = domInterception(div, { length: 10 });
 console.log(t); // 协议更新日期：202
 console.log(dom.innerHTML); // <h1>协议</h1><p>更新日期：202</p>
+```
+
+## node 下使用
+
+```js
+import { nodeInterception } from "dom-interception/node";
+
+const div = `<h1>协议</h1><p>更新日期：2023 年 9 月 10 日 <br>生效日期：2023 年 9 月 15 日</p><p>欢迎您来到。</p>`;
+
+const div = `<h1>test</h1>`;
+const result = nodeInterception(div);
+
+expect(result.text).toBe("test");
+expect(result.dom.nodeName).toBe("H1");
 ```
 
 ## 协议
