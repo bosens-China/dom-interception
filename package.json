@@ -1,7 +1,7 @@
 {
   "name": "dom-interception",
   "private": false,
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Intercepts text of a specified length",
   "type": "module",
   "files": [

@@ -22,6 +22,7 @@ yarn i dom-interception
 pnpm i dom-interception
 ```
 
+```js
 import { domInterception } from "dom-interception";
 
 const text = `<h1>Protocol</h1><img src="test.com.png" /><video src="test/video.mp4"></video><p>Welcome.</p>`;
@@ -31,6 +32,7 @@ div.innerHTML = text;
 const { text: t, dom } = domInterception(div, { length: 5 });
 console.log(t); // ProtocolWelcome
 console.log(dom.innerHTML); // <h1>Protocol</h1><img src="test.com.png"><video src="test/video.mp4"></video><p>Welcome</p>
+```
 
 ## Options
 
@@ -52,9 +54,9 @@ The length to be intercepted. By default, it does not intercept and returns all 
 - type: `boolean`
 - default: `true`
 
-Whether to fill the intercepted content to exactly match the `length`. For example, if length is set to 200 and fill is true, it will intercept exactly 200 characters.
+Whether to fill the intercepted content to exactly match the length. For example, if length is set to 200 and fill is true, it will intercept exactly 200 characters.
 
-If `false`, it will remove the exceeding nodes. You can see the following test example.
+If false, it will remove the exceeding nodes. You can see the following test example.
 
 - fill `false`
 
