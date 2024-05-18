@@ -1,39 +1,38 @@
 # dom-interception
 
-对 dom 元素或者富文本编辑器进行内容截取，不会丧失层级关系。
+[中文文档](./README_ZH.md)
 
-什么时候需要它？
+Intercept the content of DOM elements or rich text editors without losing the hierarchical structure.
 
-想象下如果有一个场景，需要对内容进行限制，例如只有付费之后才能查看更多内容，为了安全起见可能需要对内容进行分层。
-这个工具可以辅助你完成上述工作。
+When do you need it?
 
-## 使用方式
+Imagine a scenario where content needs to be restricted, for example, only allowing more content to be viewed after payment. For security reasons, it may be necessary to layer the content. This tool can help you achieve that.
 
-```sh
+## Usage
+
+```txt
 npm i dom-interception
 ```
 
-```sh
+```txt
 yarn i dom-interception
 ```
 
-```sh
+```txt
 pnpm i dom-interception
 ```
 
-```js
 import { domInterception } from "dom-interception";
 
-const text = `<h1>协议</h1><img src="test.com.png" /><video src="test/video.mp4"></video><p>欢迎您来到。</p>`;
+const text = `<h1>Protocol</h1><img src="test.com.png" /><video src="test/video.mp4"></video><p>Welcome.</p>`;
 const div = document.createElement("div");
 div.innerHTML = text;
 
 const { text: t, dom } = domInterception(div, { length: 5 });
-console.log(t); // 协议欢迎您
-console.log(dom.innerHTML); // <h1>协议</h1><img src="test.com.png"><video src="test/video.mp4"></video><p>欢迎您</p>
-```
+console.log(t); // ProtocolWelcome
+console.log(dom.innerHTML); // <h1>Protocol</h1><img src="test.com.png"><video src="test/video.mp4"></video><p>Welcome</p>
 
-## 选项
+## Options
 
 ```js
 export interface Options {
@@ -44,31 +43,31 @@ export interface Options {
 
 ### length
 
-- type: `number`
+- type: number
 
-需要截取的长度，默认不截取全部返回。
+The length to be intercepted. By default, it does not intercept and returns all content.
 
 ### fill
 
 - type: `boolean`
 - default: `true`
 
-是否填充截取长度刚好等于 `length`，例如 length 设置为 200 fill 为 `true`，则会截取刚好为 200 字符。
+Whether to fill the intercepted content to exactly match the `length`. For example, if length is set to 200 and fill is true, it will intercept exactly 200 characters.
 
-如果为 `false`，则删除超出节点，可以看下面这个测试例子。
+If `false`, it will remove the exceeding nodes. You can see the following test example.
 
 - fill `false`
 
 ```js
 import { domInterception } from "dom-interception";
 
-const text = `<h1>协议</h1><p>更新日期：2023 年 9 月 10 日 <br>生效日期：2023 年 9 月 15 日</p><p>欢迎您来到。</p>`;
+const text = `<h1>Protocol</h1><p>Updated: September 10, 2023 <br>Effective: September 15, 2023</p><p>Welcome.</p>`;
 const div = document.createElement("div");
 div.innerHTML = text;
 
 const { text: t, dom } = domInterception(div, { length: 10, fill: false });
-console.log(t); // 协议
-console.log(dom.innerHTML); // <h1>协议</h1>
+console.log(t); // Protocol
+console.log(dom.innerHTML); // <h1>Protocol</h1>
 ```
 
 - fill `true`
@@ -76,21 +75,21 @@ console.log(dom.innerHTML); // <h1>协议</h1>
 ```js
 import { domInterception } from "dom-interception";
 
-const text = `<h1>协议</h1><p>更新日期：2023 年 9 月 10 日 <br>生效日期：2023 年 9 月 15 日</p><p>欢迎您来到。</p>`;
+const text = `<h1>Protocol</h1><p>Updated: September 10, 2023 <br>Effective: September 15, 2023</p><p>Welcome.</p>`;
 const div = document.createElement("div");
 div.innerHTML = text;
 
 const { text: t, dom } = domInterception(div, { length: 10 });
-console.log(t); // 协议更新日期：202
-console.log(dom.innerHTML); // <h1>协议</h1><p>更新日期：202</p>
+console.log(t); // Protocol Updated: Sep
+console.log(dom.innerHTML); // <h1>Protocol</h1><p>Updated: Sep</p>
 ```
 
-## node 下使用
+## Usage in Node
 
 ```js
 import { nodeInterception } from "dom-interception/node";
 
-const div = `<h1>协议</h1><p>更新日期：2023 年 9 月 10 日 <br>生效日期：2023 年 9 月 15 日</p><p>欢迎您来到。</p>`;
+const div = `<h1>Protocol</h1><p>Updated: September 10, 2023 <br>Effective: September 15, 2023</p><p>Welcome.</p>`;
 
 const div = `<h1>test</h1>`;
 const result = nodeInterception(div);
@@ -99,6 +98,6 @@ expect(result.text).toBe("test");
 expect(result.dom.nodeName).toBe("H1");
 ```
 
-## 协议
+## License
 
 MIT
